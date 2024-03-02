@@ -37,19 +37,23 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   }
 });
 
-blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
-  const blog = await Blog.findById(request.params.id);
-  const user = request.user;
+blogsRouter.delete(
+  '/:id',
+  middleware.userExtractor,
+  async (request, response) => {
+    const blog = await Blog.findById(request.params.id);
+    const user = request.user;
 
-  if ( blog.user.toString() === user.id){
-    await Blog.findByIdAndDelete(request.params.id);
-    response.status(204).end();
-  } else {
-    response.status(400).json({
-      error: 'User not authorized to delete this blog post.'
-    })
+    if (blog.user.toString() === user.id) {
+      await Blog.findByIdAndDelete(request.params.id);
+      response.status(204).end();
+    } else {
+      response.status(400).json({
+        error: 'User not authorized to delete this blog post.'
+      });
+    }
   }
-});
+);
 
 blogsRouter.put('/:id', async (request, response) => {
   const body = request.body;

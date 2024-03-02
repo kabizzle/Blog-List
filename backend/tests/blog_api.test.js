@@ -3,7 +3,7 @@ const supertest = require('supertest');
 const app = require('../app');
 const helper = require('./test_helper');
 const Blog = require('../models/blog');
-const blog = require("../models/blog");
+const blog = require('../models/blog');
 
 const api = supertest(app);
 
@@ -71,21 +71,16 @@ describe('Tests with authorization', () => {
       password: 'salainen'
     };
 
-    await api
-      .post('/api/users')
-      .send(newUser);
-    
-    const result = await api
-    .post('/api/login')
-    .send(userLogin);
+    await api.post('/api/users').send(newUser);
+
+    const result = await api.post('/api/login').send(userLogin);
 
     headers = {
-      'Authorization': `Bearer ${result.body.token}`
+      Authorization: `Bearer ${result.body.token}`
     };
   });
 
   test('adding a new blog is possible with auth', async () => {
-
     const newBlog = {
       title: 'Unique Blog 1',
       author: 'Jane Doe',
@@ -107,8 +102,7 @@ describe('Tests with authorization', () => {
     expect(blogList.map((i) => i.title)).toContain('Unique Blog 1');
   });
 
-test('adding a new blog fails without auth', async () => {
-
+  test('adding a new blog fails without auth', async () => {
     const newBlog = {
       title: 'Unique Blog 1',
       author: 'Jane Doe',
@@ -163,11 +157,11 @@ test('adding a new blog fails without auth', async () => {
 
   test('a blog can be deleted with auth', async () => {
     const newBlog = {
-      title: "New Blog to be Deleted",
-      url: "http://google.com",
-      author: "Larry Page",
+      title: 'New Blog to be Deleted',
+      url: 'http://google.com',
+      author: 'Larry Page',
       likes: 2
-    }
+    };
 
     await api
       .post('/api/blogs')
@@ -177,12 +171,11 @@ test('adding a new blog fails without auth', async () => {
       .expect('Content-Type', /application\/json/);
 
     const blogsAtMiddle = await helper.blogsInDb();
-    const blogToDelete = blogsAtMiddle.find(blog => blog.title === newBlog.title);
+    const blogToDelete = blogsAtMiddle.find(
+      (blog) => blog.title === newBlog.title
+    );
 
-    await api
-      .delete(`/api/blogs/${blogToDelete.id}`)
-      .set(headers)
-      .expect(204);
+    await api.delete(`/api/blogs/${blogToDelete.id}`).set(headers).expect(204);
 
     const blogsAtEnd = await helper.blogsInDb();
 
@@ -195,11 +188,11 @@ test('adding a new blog fails without auth', async () => {
 
   test('blog deletion fails without auth', async () => {
     const newBlog = {
-      title: "New Blog to be Deleted",
-      url: "http://google.com",
-      author: "Larry Page",
+      title: 'New Blog to be Deleted',
+      url: 'http://google.com',
+      author: 'Larry Page',
       likes: 2
-    }
+    };
 
     await api
       .post('/api/blogs')
@@ -209,11 +202,11 @@ test('adding a new blog fails without auth', async () => {
       .expect('Content-Type', /application\/json/);
 
     const blogsAtMiddle = await helper.blogsInDb();
-    const blogToDelete = blogsAtMiddle.find(blog => blog.title === newBlog.title);
+    const blogToDelete = blogsAtMiddle.find(
+      (blog) => blog.title === newBlog.title
+    );
 
-    await api
-      .delete(`/api/blogs/${blogToDelete.id}`)
-      .expect(401);
+    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(401);
 
     const blogsAtEnd = await helper.blogsInDb();
 
@@ -223,7 +216,7 @@ test('adding a new blog fails without auth', async () => {
 
     expect(contents).toContain(blogToDelete.title);
   });
-})
+});
 
 afterAll(async () => {
   await mongoose.connection.close();
