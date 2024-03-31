@@ -17,3 +17,12 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+
+p {
+  margin: 2px;
+}
+
+button {
+  max-height: 24px;
+  margin-left: 4px;
+}

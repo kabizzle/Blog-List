@@ -127,9 +127,13 @@ const App = () => {
   const homePage = () => {
     return (
       <div>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center'
+        }}>
         <h2>Hello {user.name}!</h2>
         <button onClick={handleLogout}>logout</button>
-
+        </div>
         <Toggleable buttonLabel='new blog'>
           <BlogForm 
             handleCreateBlog={handleCreateBlog}
@@ -144,7 +148,7 @@ const App = () => {
         
         <h3>Your blogs:</h3>
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
+          <Blog key={blog.id} blog={blog} user={user}/>
         )}
       </div>
     )
