@@ -3,6 +3,8 @@ import Blog from './components/Blog'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Toggleable from './components/Toggleable'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -122,51 +124,23 @@ const App = () => {
     )
   }
 
-  const createBlogForm = () => {
-    return (
-      <div>
-        <h3>Create new blog:</h3>
-        <form onSubmit={handleCreateBlog}>
-          <div>
-            title
-            <input 
-              type="text" 
-              value={blogTitle} 
-              name="title" 
-              onChange={({ target }) => setBlogTitle(target.value)}
-            />          
-          </div>
-          <div>
-            author
-            <input
-              type="text"
-              value={blogAuthor}
-              name="author"
-              onChange={({ target }) => setBlogAuthor(target.value)}
-            />  
-          </div>
-          <div>
-            url
-            <input
-              type="text"
-              value={blogURL}
-              name="url"
-              onChange={({ target }) => setBlogURL(target.value)}
-            />  
-          </div>
-          <button type="submit">create</button>
-        </form>
-      </div>
-    )
-  }
-
   const homePage = () => {
     return (
       <div>
         <h2>Hello {user.name}!</h2>
         <button onClick={handleLogout}>logout</button>
 
-        {createBlogForm()}
+        <Toggleable buttonLabel='new blog'>
+          <BlogForm 
+            handleCreateBlog={handleCreateBlog}
+            handleTitleChange={({ target }) => setBlogTitle(target.value)}
+            handleAuthorChange={({ target }) => setBlogAuthor(target.value)}
+            handleURLChange={({ target }) => setBlogURL(target.value)}
+            blogTitle={blogTitle}
+            blogAuthor={blogAuthor}
+            blogURL={blogURL}
+          />
+        </Toggleable>
         
         <h3>Your blogs:</h3>
         {blogs.map(blog =>
