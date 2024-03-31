@@ -12,6 +12,7 @@ const App = () => {
   const [blogAuthor, setBlogAuthor] = useState('')
   const [blogURL, setBlogURL] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -46,8 +47,12 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      setSuccessMessage('Successfully logged in!');
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      setErrorMessage('Wrong username of password')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -59,6 +64,10 @@ const App = () => {
     event.preventDefault();
     window.localStorage.removeItem('loggedBlogListUser');
     setUser(null);
+    setSuccessMessage('Successfully logged out!');
+    setTimeout(() => {
+      setSuccessMessage(null)
+    }, 5000)
   }
 
   // form to create new blog
@@ -74,6 +83,10 @@ const App = () => {
     setBlogTitle('');
     setBlogAuthor('');
     setBlogURL('');
+    setSuccessMessage('New blog created!');
+    setTimeout(() => {
+      setSuccessMessage(null)
+    }, 5000)
 
     const blogs = await blogService.getAll();
     setBlogs(blogs);
@@ -152,7 +165,6 @@ const App = () => {
       <div>
         <h2>Hello {user.name}!</h2>
         <button onClick={handleLogout}>logout</button>
-        <Notification message={errorMessage} />
 
         {createBlogForm()}
         
@@ -168,6 +180,8 @@ const App = () => {
   // if not, show login form
   return (
     <div>
+      <Notification message={errorMessage} messageType={'error'}/>
+      <Notification message={successMessage} messageType={'success'}/>
       { !user && loginForm() }
       { user && homePage() }
     </div>
