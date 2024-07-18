@@ -32,6 +32,12 @@ const Blog = ({ blog, user }) => {
   const likesStyle = {
     display: 'flex',
   }
+  const deleteBlogPost = async () => {
+    if (window.confirm(`Are you sure you want to remove blog: ${blog.title}?`)) {
+      await blogs.deleteBlog(blog);
+      window.location.reload();
+    }
+  }
 
   return (
 <div>
@@ -45,6 +51,7 @@ const Blog = ({ blog, user }) => {
           <p>{blog.likes}</p> <button onClick={updateLikes}>like</button>
         </div>
         <p>{user.name}</p>
+        <button onClick={deleteBlogPost}>delete</button>
       </div>
     </div>
   )
