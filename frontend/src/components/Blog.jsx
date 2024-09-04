@@ -1,17 +1,17 @@
-import { useState } from "react";
-import blogs from "../services/blogs";
+import { useState } from 'react'
+import blogs from '../services/blogs'
 
 const Blog = ({ blog, user }) => {
   const [showBlogInfo, setShowBlogInfo] = useState(false)
-  
+
   const updateLikes = async () => {
-    const newBlog = blog;
-    newBlog.likes = blog.likes + 1;
-    await blogs.setBlog(blog.id, newBlog);
-    window.location.reload();
+    const newBlog = blog
+    newBlog.likes = blog.likes + 1
+    await blogs.setBlog(blog.id, newBlog)
+    window.location.reload()
   }
 
-  const hideWhenVisible = { 
+  const hideWhenVisible = {
     display: showBlogInfo ? 'none' : '',
     paddingTop: 5,
     paddingBottom: 5,
@@ -20,7 +20,7 @@ const Blog = ({ blog, user }) => {
     borderWidth: 2,
     marginBottom: 5
   }
-  const showWhenVisible = { 
+  const showWhenVisible = {
     display: showBlogInfo ? '' : 'none',
     paddingTop: 10,
     paddingBottom: 5,
@@ -34,16 +34,16 @@ const Blog = ({ blog, user }) => {
   }
   const deleteBlogPost = async () => {
     if (window.confirm(`Are you sure you want to remove blog: ${blog.title}?`)) {
-      await blogs.deleteBlog(blog);
-      window.location.reload();
+      await blogs.deleteBlog(blog)
+      window.location.reload()
     }
   }
 
   return (
-<div>
+    <div>
       <div style={hideWhenVisible}>
         {blog.title} {blog.author} <button onClick={() => setShowBlogInfo(true)}>view</button>
-      </div>  
+      </div>
       <div style={showWhenVisible}>
         {blog.title} {blog.author} <button onClick={() => setShowBlogInfo(false)}>hide</button>
         <p>{blog.url}</p>
