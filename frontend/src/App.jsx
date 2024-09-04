@@ -18,12 +18,12 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogListUser');
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogListUser')
 
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      blogService.setToken(user.token);
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      blogService.setToken(user.token)
     }
   }, [])
 
@@ -31,12 +31,12 @@ const App = () => {
     blogService.getAll().then(blogs => {
       const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes)
       setBlogs( sortedBlogs )
-      }
-    )  
+    }
+    )
   }, [])
 
   const handleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     try {
       const user = await loginService.login({
@@ -46,12 +46,12 @@ const App = () => {
       window.localStorage.setItem(
         'loggedBlogListUser', JSON.stringify(user)
       )
-      
-      blogService.setToken(user.token);
+
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
-      setSuccessMessage('Successfully logged in!');
+      setSuccessMessage('Successfully logged in!')
       setTimeout(() => {
         setSuccessMessage(null)
       }, 5000)
@@ -65,10 +65,10 @@ const App = () => {
 
   // when user logs out, remove their details from localStorage and set user to null
   const handleLogout = async (event) => {
-    event.preventDefault();
-    window.localStorage.removeItem('loggedBlogListUser');
-    setUser(null);
-    setSuccessMessage('Successfully logged out!');
+    event.preventDefault()
+    window.localStorage.removeItem('loggedBlogListUser')
+    setUser(null)
+    setSuccessMessage('Successfully logged out!')
     setTimeout(() => {
       setSuccessMessage(null)
     }, 5000)
@@ -76,26 +76,26 @@ const App = () => {
 
   // form to create new blog
   const handleCreateBlog = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     await blogService.create({
-      "title": blogTitle,
-      "author": blogAuthor,
-      "url": blogURL
+      'title': blogTitle,
+      'author': blogAuthor,
+      'url': blogURL
     })
 
-    setBlogTitle('');
-    setBlogAuthor('');
-    setBlogURL('');
-    setSuccessMessage('New blog created!');
+    setBlogTitle('')
+    setBlogAuthor('')
+    setBlogURL('')
+    setSuccessMessage('New blog created!')
     setTimeout(() => {
       setSuccessMessage(null)
     }, 5000)
 
-    const blogs = await blogService.getAll();
-    setBlogs(blogs);
+    const blogs = await blogService.getAll()
+    setBlogs(blogs)
   }
-  
+
   // Form for user to log in
   const loginForm = () => {
     return (
@@ -104,12 +104,12 @@ const App = () => {
         <form onSubmit={handleLogin}>
           <div>
             username
-            <input 
-              type="text" 
-              value={username} 
-              name="Username" 
+            <input
+              type="text"
+              value={username}
+              name="Username"
               onChange={({ target }) => setUsername(target.value)}
-            />          
+            />
           </div>
           <div>
             password
@@ -118,7 +118,7 @@ const App = () => {
               value={password}
               name="Password"
               onChange={({ target }) => setPassword(target.value)}
-            />  
+            />
           </div>
           <button type="submit">login</button>
         </form>
@@ -133,11 +133,11 @@ const App = () => {
           display: 'flex',
           alignItems: 'center'
         }}>
-        <h2>Hello {user.name}!</h2>
-        <button onClick={handleLogout}>logout</button>
+          <h2>Hello {user.name}!</h2>
+          <button onClick={handleLogout}>logout</button>
         </div>
         <Toggleable buttonLabel='new blog'>
-          <BlogForm 
+          <BlogForm
             handleCreateBlog={handleCreateBlog}
             handleTitleChange={({ target }) => setBlogTitle(target.value)}
             handleAuthorChange={({ target }) => setBlogAuthor(target.value)}
@@ -147,7 +147,7 @@ const App = () => {
             blogURL={blogURL}
           />
         </Toggleable>
-        
+
         <h3>Your blogs:</h3>
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} user={user}/>

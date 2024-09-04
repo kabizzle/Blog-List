@@ -24,6 +24,8 @@ const Toggleable = React.forwardRef((props, ref) => {
   )
 })
 
+Toggleable.displayName = Toggleable
+
 Toggleable.propTypes = {
   buttonLabel: PropTypes.string.isRequired
 }
