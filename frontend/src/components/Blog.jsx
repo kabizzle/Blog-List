@@ -1,14 +1,11 @@
 import { useState } from 'react'
 import blogs from '../services/blogs'
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog, user, updateLikes }) => {
   const [showBlogInfo, setShowBlogInfo] = useState(false)
 
-  const updateLikes = async () => {
-    const newBlog = blog
-    newBlog.likes = blog.likes + 1
-    await blogs.setBlog(blog.id, newBlog)
-    window.location.reload()
+  const updateLikesButton = async () => {
+    await updateLikes(blog)
   }
 
   const hideWhenVisible = {
@@ -48,7 +45,7 @@ const Blog = ({ blog, user }) => {
         {blog.title} {blog.author} <button onClick={() => setShowBlogInfo(false)}>hide</button>
         <p>{blog.url}</p>
         <div style={likesStyle}>
-          <p>{blog.likes}</p> <button onClick={updateLikes} className='likeButton'>like</button>
+          <p>{blog.likes}</p> <button onClick={updateLikesButton} className='likeButton'>like</button>
         </div>
         <p>{user.name}</p>
         <button onClick={deleteBlogPost} className='deleteButton'>delete</button>

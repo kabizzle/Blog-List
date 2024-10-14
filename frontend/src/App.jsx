@@ -35,6 +35,13 @@ const App = () => {
     )
   }, [])
 
+  const updateLikesFn = async (blog) => {
+    const newBlog = blog
+    newBlog.likes = blog.likes + 1
+    await blogService.setBlog(blog.id, newBlog)
+    window.location.reload()
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -150,7 +157,7 @@ const App = () => {
 
         <h3>Your blogs:</h3>
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} user={user}/>
+          <Blog key={blog.id} blog={blog} user={user} updateLikes={updateLikesFn}/>
         )}
       </div>
     )
