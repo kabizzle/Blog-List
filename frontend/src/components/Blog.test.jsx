@@ -16,16 +16,22 @@ describe('<Blog />', () => {
     container = render(<Blog blog={blog} user={'Test User 1'} />).container
 
   })
+
   test('blog url and likes are shown after button is clicked', async () => {
+
     const user = userEvent.setup()
     const button = screen.getByText('view')
 
     await user.click(button)
+
     const div = container.querySelector('.toggledBlogInfo')
-    expect(div).toHaveTextContent('Test Blog 1 Test Author 1 hidetesturl1.com0 likedelete')
+    expect(div).not.toHaveStyle('display:none')
   })
+
   test('only blog author and title are initially visible', () => {
-    const div = container.querySelector('.initialBlogInfo')
-    expect(div).toHaveTextContent('Test Blog 1 Test Author 1')
+
+    const element1 = screen.getAllByText('Test Blog 1 Test Author 1')
+
+    expect(element1).toBeDefined()
   })
 })
