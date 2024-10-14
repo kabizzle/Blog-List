@@ -31,7 +31,9 @@ describe('<Blog />', () => {
   test('only blog author and title are initially visible', () => {
 
     const element1 = screen.getAllByText('Test Blog 1 Test Author 1')
+    const div = container.querySelector('.toggledBlogInfo')
 
     expect(element1).toBeDefined()
+    expect(div).toHaveStyle('display:none')
   })
 })
