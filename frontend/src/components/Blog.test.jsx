@@ -1,9 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import Blog from './Blog'
 import userEvent from '@testing-library/user-event'
-import { beforeEach } from 'vitest'
+import { beforeEach, expect } from 'vitest'
 
 let container
+const mockHandler = vi.fn()
+
 describe('<Blog />', () => {
 
   beforeEach(() => {
@@ -13,7 +15,8 @@ describe('<Blog />', () => {
       url: 'testurl1.com',
       likes: 0
     }
-    container = render(<Blog blog={blog} user={'Test User 1'} />).container
+
+    container = render(<Blog blog={blog} user={'Test User 1'} updateLikes={mockHandler} />).container
 
   })
 
@@ -35,5 +38,17 @@ describe('<Blog />', () => {
 
     expect(element1).toBeDefined()
     expect(div).toHaveStyle('display:none')
+  })
+
+  test('updateLikes function is called twice when button is clicked twice', async () => {
+
+    const user = userEvent.setup()
+    const likeButton = screen.getByText('like')
+
+    await user.click(likeButton)
+    await user.click(likeButton)
+
+    expect(mockHandler.mock.calls).toHaveLength(2)
+
   })
 })
