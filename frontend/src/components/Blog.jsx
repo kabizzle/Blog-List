@@ -5,7 +5,7 @@ const Blog = ({ blog, user, updateLikes }) => {
   const [showBlogInfo, setShowBlogInfo] = useState(false)
 
   const updateLikesButton = async () => {
-    updateLikes(blog)
+    await updateLikes(blog)
   }
 
   const hideWhenVisible = {
