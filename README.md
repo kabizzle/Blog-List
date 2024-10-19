@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to Blog-List 👋</h1>
+<h1 align="center">Welcome to Blog List 👋</h1>
 <p>
   <a href="https://github.com/kabizzle/Blog-List" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -8,7 +8,7 @@
   </a>
 </p>
 
-> A full-stack blog application built using the MERN stack (MongoDB, Express.js, React, and Node.js), TypeScript, and Vite. This project is structured as a monorepo, featuring separate directories for the frontend and backend.
+> A full-stack blog application built using the MERN stack (MongoDB, Express.js, React, and Node.js). This project was built during the Full Stack Open course. It features a a monorepo structure, with directories for both frontend and backend.
 
 ## Usage
 
